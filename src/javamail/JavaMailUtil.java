@@ -21,7 +21,7 @@ public class JavaMailUtil {
 		System.out.println(recepient);
 	}
 	
-	public static void sendMail(String recepient) throws Exception {
+	public static void sendMail(String recepient, String billid) throws Exception {
 		System.out.println("Preparing Email to be sent!!!");
 		Properties properties = new Properties();
 		
@@ -45,18 +45,18 @@ public class JavaMailUtil {
 		
 		System.out.println("before message");
 		System.out.println(session);
-		Message message=prepareMessage(session,myAccountEmail,recepient);
+		Message message=prepareMessage(session,myAccountEmail,recepient,billid);
 		Transport.send(message);
 		System.out.println("Mail sent succesfully!@!!");
 	}
 	
-	private static Message prepareMessage(Session session,String myAccountEmail,String recepient) {
+	private static Message prepareMessage(Session session,String myAccountEmail,String recepient, String billid) {
 		try {
 		Message message = new MimeMessage(session );
 		message.setFrom(new InternetAddress(myAccountEmail));
 		message.setRecipient(Message.RecipientType.TO,new InternetAddress(recepient));
 		message.setSubject("OORJA BILL ALERT SYSTEM");
-		message.setText("Testing the alert system !!! 1223893");
+		message.setText("Electricity Bill Payment DUE for the BILL ID- "+billid);
 		return message;
 		}catch(Exception er) {
 			Logger.getLogger(JavaMailUtil.class.getName()).log(Level.SEVERE,null,er);
