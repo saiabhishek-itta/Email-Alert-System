@@ -25,21 +25,33 @@ public class JavaMailUtil {
 		System.out.println("Preparing Email to be sent!!!");
 		Properties properties = new Properties();
 		
-		properties.put("mail.smtp.auth", "true");
+		/*properties.put("mail.smtp.auth", "true");
 		properties.put("mail.smtp.starttls.enable", "true");
 		properties.put("mail.smtp.host", "smtp.gmail.com");
 		properties.put("mail.smtp.port", "587");
 		properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+		*/
 		
-		String myAccountEmail="ittasaiabishek@gmail.com";
-		String password="06July00@c";
+		
+		//properties.put("mail.smtp.user", d_email);
+		properties.put("mail.smtp.host", "smtp-mail.outlook.com");
+		properties.put("mail.smtp.port", "587");
+		properties.put("mail.smtp.starttls.enable","true");
+		properties.put("mail.smtp.auth", "true");
+		properties.put("mail.smtp.socketFactory.port", "587");
+		properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		properties.put("mail.smtp.socketFactory.fallback", "true");
+		
+		
+		String myAccountEmail="abishekitta@outlook.com";
+		String password="9#?R_(Mfm-zs#Aq=zQY";
 		System.out.println("before session");
 		
 		Session session = Session.getDefaultInstance(properties,
 			    new Authenticator() {
 			        protected PasswordAuthentication  getPasswordAuthentication() {
 			        return new PasswordAuthentication(
-			                    "ittasaiabishek@gmail.com", "06July00@c");
+			                    "abishekitta@outlook.com", "9#?R_(Mfm-zs#Aq=zQY");
 			                }
 			    });
 		
