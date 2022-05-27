@@ -20,9 +20,11 @@ public class JavaMail {
                 HttpResponse.BodyHandlers.ofString());
 
         System.out.println(response.body());
+        String email=response.body().split(",")[1];
+        String status=response.body().split(",")[0];
 	
-        if(response.body().equals("not paid"))
-		JavaMailUtil.sendMail("abishekitta@gmail.com",billid);
+        if(status.equals("not paid"))
+		JavaMailUtil.sendMail(email,billid);
         
         else
         	System.out.println("Bill Payment was done (Bill Id = "+billid+")");
