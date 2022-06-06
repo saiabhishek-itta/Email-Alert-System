@@ -1,0 +1,84 @@
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import com.spire.doc.Document;
+import com.spire.doc.FileFormat;
+import com.spire.doc.Section;
+import com.spire.doc.documents.BuiltinStyle;
+import com.spire.doc.documents.Paragraph;
+import com.spire.doc.documents.ParagraphStyle;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+public class apitest {
+
+	public static void main(String[] args) throws Exception {
+		
+		
+ String[] reqid = {"SB41SB42INB5190462232201077ff0831c3", "SB41SB42INB5190462232201054abcbb6b1"};
+ String[] expectedop = {			
+"{\"head\":{\"requestId\":\"SB41SB42INB5190462232201077ff0831c3\",\"ts\":\"2022-01-07T12:28:44+05:30\"},\"reason\":{\"responseReason\":\"Successful\",\"responseCode\":\"000\"},\"stateList\":[{\"stateName\":\"Andhra Pradesh\"},{\"stateName\":\"Arunachal Pradesh\"},{\"stateName\":\"Assam\"},{\"stateName\":\"Bihar\"},{\"stateName\":\"Chhattisgarh\"},{\"stateName\":\"Goa\"},{\"stateName\":\"Gujarat\"},{\"stateName\":\"Haryana\"},{\"stateName\":\"Himachal Pradesh\"},{\"stateName\":\"Jammu and Kashmir\"},{\"stateName\":\"Jharkhand\"},{\"stateName\":\"Karnataka\"},{\"stateName\":\"Kerala\"},{\"stateName\":\"Madhya Pradesh\"},{\"stateName\":\"Maharashtra\"},{\"stateName\":\"Manipur\"},{\"stateName\":\"Meghalaya\"},{\"stateName\":\"Mizoram\"},{\"stateName\":\"Nagaland\"},{\"stateName\":\"Odisha\"},{\"stateName\":\"Punjab\"},{\"stateName\":\"Rajasthan\"},{\"stateName\":\"Sikkim\"},{\"stateName\":\"Tamil Nadu\"},{\"stateName\":\"Telangana\"},{\"stateName\":\"Tripura\"},{\"stateName\":\"Uttar Pradesh\"},{\"stateName\":\"Uttarakhand\"},{\"stateName\":\"West Bengal\"},{\"stateName\":\"Andaman and Nicobar Islands\"},{\"stateName\":\"Chandigarh\"},{\"stateName\":\"Dadra and Nagar Haveli\"},{\"stateName\":\"Daman and Diu\"},{\"stateName\":\"Delhi\"},{\"stateName\":\"Ladakh\"},{\"stateName\":\"Lakshadweep\"},{\"stateName\":\"Puducherry\"}]}",
+
+"{ \"head\": { \"requestId\": \"SB41SB42INB5190462232201054abcbb6b1\", \"refId\": \"SB41FB0BC9DBMB8EEM413EMAA2420051549\", \"msgId\": \"SB41BE1D6EECM1A92M448DMA1B620051549\", \"ts\": \"2022-01-05T15:49:11+05:30\" }, \"reason\": { \"responseCode\": \"000\", \"responseReason\": \"Successful\",\"complianceReason\": \"\", \"complianceRespCd\": \"\" }, \"billerResponse\": { \"approvalRefNum\": \"24260454243201126\", \"customerName\": \"RAMAKANT TIWARI S/O TARKESHWAR\", \"billAmount\": \"50000\", \"dueDate\": \"2021-07-06\", \"billDate\": \"2021-07-05\", \"billNumber\": \"20210624020007688\", \"billPeriod\": \"JUN-21\", \"responseParams\": [] } }"		
+ };
+ 
+ Document document = new Document();
+ Section section = document.addSection();
+ Paragraph heading = section.addParagraph();
+ heading.appendText("API TESTING AUTO GENERATED REPORT");
+
+ 
+ for(int i=0;i<reqid.length;i++) {
+
+	 System.out.println(i+1);
+ HttpClient client = HttpClient.newHttpClient();
+ HttpRequest request = HttpRequest.newBuilder()
+         .uri(URI.create("https://abishekitta.free.beeceptor.com/oorja/"+reqid[i])).build();
+ HttpResponse<String> response = client.send(request,HttpResponse.BodyHandlers.ofString());
+ 
+ System.out.println("response : "+response.body());
+ System.out.println("Expected : "+expectedop[i]);
+ 
+ Paragraph subheading_1 = section.addParagraph();
+ Paragraph para_1 = section.addParagraph();
+ subheading_1.appendText((i+1)+") Request ID - " +reqid[i]);
+
+ if(response.body().equals(expectedop[i])) {
+	 System.out.println(reqid[0]+" Matched");
+	 
+     para_1.appendText(
+"Response Matched with Expected Output\n OUTPUT :\n"+expectedop[i]);
+ 
+ }
+ 
+ else { 
+	 System.out.println(reqid[0]+" Not Matched !!!");
+     para_1.appendText(
+"Response Didnot Match with Expected Output\n EXPECTED OUTPUT :\n"+expectedop[i]+"\n\n RESPONSE :\n"+response.body());
+ 
+ }
+
+ 
+ System.out.println("");
+ 
+ heading.applyStyle(BuiltinStyle.Title);
+ subheading_1.applyStyle(BuiltinStyle.Heading_3);
+
+ for (int k = 0;k < section.getParagraphs().getCount(); k++) 
+     section.getParagraphs().get(k).getFormat().setAfterAutoSpacing(true);
+ 
+ document.saveToFile("qWordDocument.docx",FileFormat.Docx);
+ 
+ }
+ 
+
+ System.out.println("");
+System.out.println("Done");
+
+
+	}
+
+}
